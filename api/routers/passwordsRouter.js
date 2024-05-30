@@ -7,6 +7,7 @@ router.post('/', passwordsController.create);
 router.get('/:id', passwordsController.getById);
 router.patch('/:id', passwordsController.update);
 router.delete('/:id', passwordsController.delete);
+router.get('/name/:name', passwordsController.getByName);
 router.get('/site/url/', passwordsController.getBySiteName);
 
 module.exports = router;

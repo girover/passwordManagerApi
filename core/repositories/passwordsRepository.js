@@ -10,25 +10,32 @@ module.exports = {
     getAll: async() => {
         return await Password
         .find()
-        .select('_id username password site category')
+        .select('_id name username password site category')
         .populate('category');
     },
 
     getById: async(id) => {
         return await Password.findById(id)
-                            .select('_id username password site category')
+                            .select('_id name username password site category')
                             .populate('category');
     },
 
     getByCategory: async(categoryId) => {
         return await Password.find({ category: categoryId })
-                            .select('_id username password site category')
+                            .select('_id name username password site category')
                             .populate('category');
+    },
+
+    getByName: async(name) => {
+        return await Password.find({ name: { $regex: new RegExp(name, 'i') } })
+                            .select('_id name username password site category')
+                            .populate('category');
+    
     },
 
     getBySiteName: async(site) => {
         return await Password.find({ site: site })
-                            .select('_id username password site category')
+                            .select('_id name username password site category')
                             .populate('category');
     
     },

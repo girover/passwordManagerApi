@@ -27,6 +27,17 @@ const passwordsService = {
         return Result.ok('Password retrieved', password);
     },
 
+    getByName: async function(name) {
+
+        const password = await passwordsRepository.getByName(name);
+
+        if(!password){
+            return Result.notFound('Password not found', {});
+        }
+        
+        return Result.ok('Password retrieved', password);
+    },
+
     getBySiteName: async function(site) {
 
         if(!site.includes('http://') && !site.includes('https://')) {
@@ -36,7 +47,7 @@ const passwordsService = {
         var siteWithoutProtocol = `${url.hostname}`;
         var siteWithProtocol = `${url.protocol}//${url.hostname}`;
         //site = `${url.protocol}//${url.hostname}`;
-        console.log(siteWithProtocol, siteWithoutProtocol)
+        
         var password = await passwordsRepository.getBySiteName(siteWithoutProtocol);
         
         if(!password || password.length === 0){
@@ -52,6 +63,7 @@ const passwordsService = {
 
         let newPassword = new Password({
             _id: new mongoose.Types.ObjectId(),
+            name: password.name,
             username: password.username,
             password: password.password,
             site: password.site,
@@ -77,6 +89,7 @@ const passwordsService = {
             return Result.notFound('Password not found', {field: 'id', message: 'Password not found'});
         }
         
+        retrievedPassword.name = password.name ?? retrievedPassword.name;
         retrievedPassword.username = password.username ?? retrievedPassword.username;
         retrievedPassword.password = password.password ?? retrievedPassword.password;
         retrievedPassword.site = password.site ?? retrievedPassword.site;

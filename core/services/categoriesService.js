@@ -45,7 +45,8 @@ const categoriesService = {
 
         let newCategory = new Category({
             _id: new mongoose.Types.ObjectId(),
-            name: category.name
+            name: category.name,
+            description: category.description
         });
 
         let validateErrors = newCategory.validateSync();

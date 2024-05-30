@@ -9,7 +9,7 @@ module.exports = {
     getAll: async() => {
         return await Category
         .find()
-        .select('_id name');
+        .select('_id name description');
     },
 
     getById: async(id) => {

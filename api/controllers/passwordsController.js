@@ -26,6 +26,14 @@ module.exports = {
         } catch (error) {next(error);}
     },
 
+    getByName: async(req, res, next) => {
+        try {
+            let name = req.params.name;
+            let result = await passwordsService.getByName(name);
+            res.status(result.status).json(result);
+        } catch (error) { next(error)}
+    },
+
     getBySiteName: async(req, res, next) => {
         try {
             let result = await passwordsService.getBySiteName(req.query.search);
